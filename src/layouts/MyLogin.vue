@@ -15,7 +15,7 @@
                 <q-item-tile color="primary" icon="face" />
               </q-item-side>
               <q-item-main>
-                <q-input v-model="username" placeholder="Username" lower-case />
+                <q-input v-model="login.tuuser" placeholder="Username" lower-case />
               </q-item-main>
             </q-item>
             <q-item>
@@ -23,12 +23,12 @@
                 <q-item-tile color="red" icon="fingerprint" />
               </q-item-side>
               <q-item-main>
-                <q-input v-model="password" placeholder="Password" type="password" />
+                <q-input v-model="login.password" placeholder="Password" type="password" />
               </q-item-main>
             </q-item>
             <q-item>
               <q-item-main>
-                <q-btn rounded label="login" color="primary" class="full-width" />
+                <q-btn rounded label="login" color="primary" class="full-width" @click="onLogin" />
               </q-item-main>
             </q-item>
             <q-item>
@@ -44,19 +44,28 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
 
 export default {
   name: 'MyLogin',
   data () {
     return {
-      username: '',
-      password: '',
-      appName: 'MY IURAN'
+      login: {
+        tuuser: '',
+        password: ''
+      },
+      // appName: 'MY IURAN'
+      appName: 'TRIAL'
     }
   },
   methods: {
-    openURL
+    onLogin () {
+      this.$auth.login({
+        fetchUser: false,
+        data: this.login
+      })
+        .then(response => {
+        }, (error) => this.$q.notify(error))
+    }
   }
 }
 </script>

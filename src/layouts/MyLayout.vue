@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" v-if="this.$store.state.auth.loggedIn">
     <q-layout-header>
       <q-toolbar
         color="primary"
@@ -20,6 +20,11 @@
           Quasar App
           <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
         </q-toolbar-title>
+        <q-tabs>
+          <q-route-tab slot="title" to="/" icon="home"/>
+          <q-route-tab slot="title" to="account" icon="account_circle"/>
+          <q-tab slot="title" v-on:click="logout()" icon="power_settings_new"/>
+        </q-tabs>
       </q-toolbar>
     </q-layout-header>
 
@@ -64,6 +69,7 @@
 
 <script>
 import { openURL } from 'quasar'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'MyLayout',
@@ -73,7 +79,31 @@ export default {
     }
   },
   methods: {
-    openURL
+    ...mapMutations('auth', [
+      'LOGIN_OK', 'LOGOUT_OK'
+    ]),
+    openURL,
+    logout () {
+      this.$auth.logout({
+        makeRequest: true,
+        redirect: '/login',
+        success () {
+          this.LOGOUT_OK()
+          console.log('success ')
+        },
+        error () {
+          console.log('error ')
+        }
+      })
+    }
+  },
+  mounted: function () {
+    console.log('masuk mounted')
+
+    this.$auth.fetch({})
+      .then(response => {
+        this.LOGIN_OK(response)
+      })
   }
 }
 </script>
