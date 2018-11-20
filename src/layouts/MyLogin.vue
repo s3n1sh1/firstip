@@ -15,7 +15,13 @@
                 <q-item-tile color="primary" icon="face" />
               </q-item-side>
               <q-item-main>
-                <q-input v-model="login.tuuser" placeholder="Username" lower-case />
+                <q-input
+                  v-model="login.tuuser"
+                  placeholder="Username"
+                  lower-case
+                  @keyup.enter="onLogin"
+                  :error="$v.login.tuuser.$error"
+                />
               </q-item-main>
             </q-item>
             <q-item>
@@ -23,7 +29,13 @@
                 <q-item-tile color="red" icon="fingerprint" />
               </q-item-side>
               <q-item-main>
-                <q-input v-model="login.password" placeholder="Password" type="password" />
+                <q-input
+                  v-model="login.password"
+                  placeholder="Password"
+                  type="password"
+                  @keyup.enter="onLogin"
+                  :error="$v.login.password.$error"
+                />
               </q-item-main>
             </q-item>
             <q-item>
@@ -45,6 +57,8 @@
 
 <script>
 
+import { required, alpha } from 'vuelidate/lib/validators'
+
 export default {
   name: 'MyLogin',
   data () {
@@ -53,12 +67,24 @@ export default {
         tuuser: '',
         password: ''
       },
-      // appName: 'MY IURAN'
-      appName: 'TRIAL'
+      appName: 'MY IURAN'
+    }
+  },
+  validations: {
+    login: {
+      tuuser: { required, alpha },
+      password: { required }
     }
   },
   methods: {
     onLogin () {
+      this.$v.login.$touch()
+
+      if (this.$v.login.$error) {
+        this.$q.notify('Please review fields again.')
+        return
+      }
+
       this.$auth.login({
         fetchUser: false,
         data: this.login
