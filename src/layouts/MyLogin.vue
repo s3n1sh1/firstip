@@ -5,7 +5,7 @@
         <q-card class="mecard" color="white">
           <q-card-title class="text-center bg-red q-pa-xl">
             <div class="q-display-1 text-italic text-weight-bold">
-              {{appName}}
+              {{APP_DETAIL.Name}}
             </div>
           </q-card-title>
           <q-card-separator />
@@ -16,10 +16,10 @@
               </q-item-side>
               <q-item-main>
                 <q-input
+                  ref="login.tuuser"
                   v-model="login.tuuser"
                   placeholder="Username"
                   lower-case
-                  @keyup.enter="onLogin"
                   :error="$v.login.tuuser.$error"
                 />
               </q-item-main>
@@ -30,6 +30,7 @@
               </q-item-side>
               <q-item-main>
                 <q-input
+                  ref="login.password"
                   v-model="login.password"
                   placeholder="Password"
                   type="password"
@@ -45,7 +46,7 @@
             </q-item>
             <q-item>
               <q-item-main>
-                <div class="text-center text-grey q-body-2">© 2018 - Edison TJ</div>
+                <div class="text-center text-grey q-body-2">{{'© '+ currentYear +' - '+ APP_DETAIL.Author}}</div>
               </q-item-main>
             </q-item>
           </q-list>
@@ -57,7 +58,9 @@
 
 <script>
 
-import { required, alpha } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
+import { mapGetters } from 'vuex'
+import { date } from 'quasar'
 
 export default {
   name: 'MyLogin',
@@ -66,13 +69,12 @@ export default {
       login: {
         tuuser: '',
         password: ''
-      },
-      appName: 'MY IURAN'
+      }
     }
   },
   validations: {
     login: {
-      tuuser: { required, alpha },
+      tuuser: { required },
       password: { required }
     }
   },
@@ -81,16 +83,37 @@ export default {
       this.$v.login.$touch()
 
       if (this.$v.login.$error) {
-        this.$q.notify('Please review fields again.')
+        if (!this.$v.login.tuuser.required) {
+          this.$q.notify('Username is required.')
+          this.$refs['login.tuuser'].focus()
+        } else if (!this.$v.login.password.required) {
+          this.$q.notify('Password is required.')
+          this.$refs['login.password'].focus()
+        }
         return
       }
 
+      this.$displayLoading(this)
       this.$auth.login({
         fetchUser: false,
-        data: this.login
+        data: this.login,
+        success () {
+          this.$q.loading.hide()
+        },
+        error (res) {
+          this.$traitError(this, res)
+        }
       })
-        .then(response => {
-        }, (error) => this.$q.notify(error))
+    }
+  },
+  computed: {
+    ...mapGetters('auth', [
+      'APP_DETAIL'
+    ]),
+    currentYear () {
+      let timeStamp = Date.now()
+      let year = date.formatDate(timeStamp, 'YYYY')
+      return year
     }
   }
 }

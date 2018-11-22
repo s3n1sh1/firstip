@@ -3,8 +3,6 @@
     <q-layout-header>
       <q-toolbar
         color="primary"
-        :glossy="$q.theme === 'mat'"
-        :inverted="$q.theme === 'ios'"
       >
         <q-btn
           flat
@@ -16,15 +14,23 @@
           <q-icon name="menu" />
         </q-btn>
 
-        <q-toolbar-title>
-          Quasar App
-          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+        <q-toolbar-title class="text-italic text-weight-bold">
+          {{APP_DETAIL.Name}}
+          <div slot="subtitle">Home</div>
         </q-toolbar-title>
-        <q-tabs>
-          <q-route-tab slot="title" to="/" icon="home"/>
-          <q-route-tab slot="title" to="account" icon="account_circle"/>
-          <q-tab slot="title" v-on:click="logout()" icon="power_settings_new"/>
-        </q-tabs>
+
+        <q-btn-dropdown flat dense no-caps :label="USER_DETAIL.username">
+          <q-list link no-border style="padding: 0">
+            <q-item dense v-close-overlay @click.native="logout()">
+              <q-item-side icon="power_settings_new" inverted color="red" />
+              <q-item-main>
+                <q-item-tile class="q-body-1" label>Log Out</q-item-tile>
+                <!-- <q-item-tile sublabel>You can sigh</q-item-tile> -->
+              </q-item-main>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
       </q-toolbar>
     </q-layout-header>
 
@@ -69,7 +75,7 @@
 
 <script>
 import { openURL } from 'quasar'
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'MyLayout',
@@ -89,7 +95,6 @@ export default {
         redirect: '/login',
         success () {
           this.LOGOUT_OK()
-          console.log('success ')
         },
         error () {
           console.log('error ')
@@ -97,9 +102,12 @@ export default {
       })
     }
   },
+  computed: {
+    ...mapGetters('auth', [
+      'APP_DETAIL', 'USER_DETAIL'
+    ])
+  },
   mounted: function () {
-    console.log('masuk mounted')
-
     this.$auth.fetch({})
       .then(response => {
         this.LOGIN_OK(response)
