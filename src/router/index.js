@@ -45,5 +45,17 @@ Vue.use(auth, {
 //   return Promise.reject(error)
 // })
 
+// Vue.axios.interceptors.response.use(
+//   (response) => {
+//     console.log('intercept success')
+//     return response
+//   }, (error) => {
+//     if (error.response.status === 401) {
+//       console.log(error.response.status)
+//     }
+//     return Promise.reject(error)
+//   }
+// )
+
 // export default Router
 export default Vue.router

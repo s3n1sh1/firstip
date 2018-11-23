@@ -1,6 +1,11 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
+
+    <blockquote>
+      <p>Welcome to Home page.</p>
+      <small>Please use the burger on top left corner to show the Menu.</small>
+    </blockquote>
+
   </q-page>
 </template>
 
@@ -9,6 +14,9 @@
 
 <script>
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  mounted: function () {
+    this.$checkAuth(this)
+  }
 }
 </script>

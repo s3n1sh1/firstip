@@ -47,4 +47,16 @@ export default ({ app, router, Vue }) => {
       timeout: 3000
     })
   }
+
+  Vue.prototype.$checkAuth = function (
+    form
+  ) {
+    form.$auth.fetch({})
+      .then(() => {
+        form.$auth.refresh()
+      }, (error) => {
+        form.$traitError(form, error)
+        form.$store.commit('auth/LOGOUT_OK')
+      })
+  }
 }

@@ -5,7 +5,8 @@ const routes = [
     component: () => import('layouts/MyLayout.vue'),
     meta: { auth: true },
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { name: 'Welcome Page', path: '', component: () => import('pages/Index.vue') },
+      { name: 'History Iuran', path: 'record', component: () => import('pages/Record.vue') }
     ]
   },
   {
