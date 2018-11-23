@@ -28,9 +28,13 @@ export default ({ app, router, Vue }) => {
     form, ops
   ) {
     form.$q.loading.hide()
-    if (!ops.response) return
-    let reason = ''
 
+    if (!ops.response) {
+      form.$q.notify('Error: Network Error')
+      return
+    }
+
+    let reason = ''
     switch (ops.response.status) {
       case 401:
         reason = 'Invalid credentials.'
