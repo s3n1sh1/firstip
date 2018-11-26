@@ -21,11 +21,12 @@
 
         <q-btn-dropdown flat dense no-caps :label="USER_DETAIL.username">
           <q-list link no-border class="no-padding" >
-            <q-item dense v-close-overlay class="q-pa-sm" @click.native="logout()">
-              <q-item-side icon="power_off" inverted color="red" />
+            <q-item dense v-close-overlay class="q-pa-xs" @click.native="logout()">
+              <q-item-side left class="text-center" icon="power_off" color="red" />
               <q-item-main>
-                <q-item-tile class="q-caption text-weight-bolder text-red text-no-wrap" label>LOGOUT</q-item-tile>
+                <q-item-tile class="q-caption text-weight-bolder text-red text-no-wrap q-mr-md" label>LOGOUT</q-item-tile>
               </q-item-main>
+              <!-- <q-item-side right color="primary" icon="keyboard_arrow_right" /> -->
             </q-item>
           </q-list>
         </q-btn-dropdown>
@@ -46,6 +47,10 @@
         <q-item @click.native="$router.push('/')">
           <q-item-side icon="home" />
           <q-item-main label="Home" sublabel="Welcome Page" />
+        </q-item>
+        <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/user')">
+          <q-item-side icon="supervised_user_circle" />
+          <q-item-main label="User" sublabel="Setting User" />
         </q-item>
         <q-item @click.native="$router.push('/record')">
           <q-item-side icon="event_note" />

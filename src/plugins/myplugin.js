@@ -57,7 +57,7 @@ export default ({ app, router, Vue }) => {
   ) {
     form.$auth.fetch({})
       .then(() => {
-        form.$auth.refresh()
+        // form.$auth.refresh()
       }, (error) => {
         form.$traitError(form, error)
         form.$store.commit('auth/LOGOUT_OK')
