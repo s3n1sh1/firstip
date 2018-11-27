@@ -17,7 +17,7 @@
         />
       </div>
       <div slot="top-right" slot-scope="props" class="row" style="padding: 0">
-        <q-btn icon="add" dense color="primary" class="q-mr-xs" />
+        <q-btn icon="add" dense color="primary" class="q-mr-xs" @click="$emit('addEvent')" />
       </div>
 
       <q-tr slot="body" slot-scope="props" :props="props" >

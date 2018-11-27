@@ -22,8 +22,8 @@ sync(store, Vue.router)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-// Vue.axios.defaults.baseURL = 'http://localhost:8099/firstdb/api/'
-Vue.axios.defaults.baseURL = 'http://localhost:8033/api/'
+Vue.axios.defaults.baseURL = 'http://localhost:8099/firstdb/api/'
+// Vue.axios.defaults.baseURL = 'http://localhost:8033/api/'
 
 import auth from '@websanova/vue-auth'
 

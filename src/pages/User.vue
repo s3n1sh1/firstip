@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center">
-    <myGrid :columnsty="columns" :routesty="'loadUser'" />
+    <myGrid :columnsty="columns" :routesty="'loadUser'" @addEvent="openModal" />
+
+    <q-modal v-model="opened" maximized>
+    </q-modal>
   </q-page>
 </template>
 
@@ -26,7 +29,14 @@ export default {
         },
         { name: 'tuname', label: 'Name', field: 'tuname', align: 'left', sortable: true },
         { name: 'tuiran', label: 'Iuran', field: 'tuiran', align: 'right' }
-      ]
+      ],
+      opened: false,
+      tuuser: ''
+    }
+  },
+  methods: {
+    openModal () {
+      this.opened = true
     }
   },
   mounted: function () {
