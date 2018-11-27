@@ -46,15 +46,18 @@
         <q-list-header>Menu List</q-list-header>
         <q-item @click.native="$router.push('/')">
           <q-item-side icon="home" />
-          <q-item-main label="Home" sublabel="Welcome Page" />
+          <q-item-main label="Home" class="q-body-1" />
+          <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/user')">
-          <q-item-side icon="supervised_user_circle" />
-          <q-item-main label="User" sublabel="Setting User" />
+          <q-item-side icon="account_box" />
+          <q-item-main label="User Settings" class="q-body-1" />
+          <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item @click.native="$router.push('/record')">
           <q-item-side icon="event_note" />
-          <q-item-main label="Iuran" sublabel="History Iuran" />
+          <q-item-main label="History Iuran" class="q-body-1" />
+          <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -108,4 +111,8 @@ export default {
 </script>
 
 <style>
+.q-toolbar {
+  min-height: 0;
+  padding: 5px 8px;
+}
 </style>

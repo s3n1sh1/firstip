@@ -24,12 +24,8 @@ export default {
           field: 'tuuser',
           sortable: true
         },
-        {
-          name: 'xxx',
-          required: true,
-          align: 'left',
-          field: 'xxx'
-        }
+        { name: 'tuname', label: 'Name', field: 'tuname', align: 'left', sortable: true },
+        { name: 'tuiran', label: 'Iuran', field: 'tuiran', align: 'right' }
       ]
     }
   },

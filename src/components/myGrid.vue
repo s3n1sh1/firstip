@@ -6,15 +6,29 @@
       :columns="columnsty"
       :row-key="tableKey"
       :table-style="tblheight"
+      separator="horizontal"
     >
-      <q-tr slot="body" slot-scope="props" :props="props">
-        <q-td key="tuuser" :props="props">
-          <span class="text-italic">{{ props.row.tuuser }}</span>
-          <q-tooltip>I'd like to eat "{{ props.row.tuuser }}"</q-tooltip>
+      <div slot="top-left" slot-scope="props" class="row bg-white q-ml-sm" style="padding: 0">
+        <q-search
+          hide-underline
+          color="primary"
+          v-model="filter"
+          class="q-ma-xs q-caption"
+        />
+      </div>
+      <div slot="top-right" slot-scope="props" class="row" style="padding: 0">
+        <q-btn icon="add" dense color="primary" class="q-mr-xs" />
+      </div>
+
+      <q-tr slot="body" slot-scope="props" :props="props" >
+        <q-td auto-width v-for="col in props.cols" :key="col.name" :props="props">
+          {{col.value}}
         </q-td>
-        <q-td key="xxx" :props="props">
-          <span class="text-italic">{{ props.row.xxx }}</span>
-          <q-tooltip>I'd like to eat "{{ props.row.xxx }}"</q-tooltip>
+        <q-td auto-width key="action">
+          <div class="text-right">
+            <q-btn icon="edit" dense color="primary" class="q-mr-xs" />
+            <q-btn icon="delete" dense color="red" />
+          </div>
         </q-td>
       </q-tr>
     </q-table>
@@ -26,6 +40,15 @@
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
+}
+.q-table-top {
+  min-height: 0;
+  padding: 0;
+  background-color: lightgrey;
+}
+.q-table th {
+  font-weight: bolder;
+  font-style: italic;
 }
 </style>
 
@@ -39,16 +62,18 @@ export default {
     return {
       tblheight: '',
       tableKey: '',
-      tableData: []
+      tableData: [],
+      filter: ''
     }
   },
   methods: {
     onResize (size) {
-      this.tblheight = 'height: ' + (size.height - 100).toString() + 'px'
+      let value = this.$q.platform.is.mobile ? 137 : 142
+      this.tblheight = 'height: ' + (size.height - value).toString() + 'px'
     }
   },
   mounted: function () {
-    this.$axios.get(this.$axios.defaults.baseURL + 'loadUser').then((response) => {
+    this.$axios.get(this.$axios.defaults.baseURL + this.routesty).then((response) => {
       console.log(response)
       this.tableData = response.data.data
     })
