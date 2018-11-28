@@ -74,7 +74,6 @@ export default {
   },
   mounted: function () {
     this.$axios.get(this.$axios.defaults.baseURL + this.routesty).then((response) => {
-      console.log(response)
       this.tableData = response.data.data
     })
   }

@@ -81,7 +81,6 @@ export default {
   methods: {
     onLogin () {
       this.$v.login.$touch()
-
       if (this.$v.login.$error) {
         if (!this.$v.login.tuuser.required) {
           this.$q.notify('Username is required.')

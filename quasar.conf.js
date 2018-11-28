@@ -27,6 +27,15 @@ module.exports = function (ctx) {
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API: JSON.stringify('http://localhost:8033/api/'),
+          // API: JSON.stringify('http://localhost:8099/firstdb/api/')
+          SECRET: JSON.stringify('eds123')
+        }
+        : { // and on build (production)
+          API: JSON.stringify('http://localhost:8099/firstdb/api/')
+        },
       extendWebpack (cfg) {
         cfg.module.rules.push({
           enforce: 'pre',

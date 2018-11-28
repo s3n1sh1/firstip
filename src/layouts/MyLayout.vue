@@ -24,7 +24,7 @@
             <q-item dense v-close-overlay class="q-pa-xs" @click.native="logout()">
               <q-item-side left class="text-center" icon="power_off" color="red" />
               <q-item-main>
-                <q-item-tile class="q-caption text-weight-bolder text-red text-no-wrap q-mr-md" label>LOGOUT</q-item-tile>
+                <q-item-tile class="q-caption text-weight-bolder text-red text-no-wrap q-mr-md">LOGOUT</q-item-tile>
               </q-item-main>
               <!-- <q-item-side right color="primary" icon="keyboard_arrow_right" /> -->
             </q-item>

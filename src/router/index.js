@@ -22,8 +22,7 @@ sync(store, Vue.router)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = 'http://localhost:8099/firstdb/api/'
-// Vue.axios.defaults.baseURL = 'http://localhost:8033/api/'
+Vue.axios.defaults.baseURL = process.env.API
 
 import auth from '@websanova/vue-auth'
 
@@ -33,6 +32,24 @@ Vue.use(auth, {
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
   rolesVar: 'role'
 })
+
+Vue.axios.defaults.paramsSerializer = params => {
+  if (params) {
+    var retval = Vue.prototype.$encryptParam(params)
+    var querystring = require('querystring')
+    return querystring.stringify(retval)
+  }
+  return params
+}
+
+Vue.axios.defaults.transformRequest = params => {
+  if (params) {
+    var retval = Vue.prototype.$encryptParam(params)
+    var querystring = require('querystring')
+    return querystring.stringify(retval)
+  }
+  return params
+}
 
 // Vue.axios.interceptors.request.use(function (config) {
 //   config.headers['Authorization'] = 'Bearer no_token'

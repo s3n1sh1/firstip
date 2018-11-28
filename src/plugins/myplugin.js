@@ -2,6 +2,23 @@
 
 // leave the export, even if you don't use it
 export default ({ app, router, Vue }) => {
+  Vue.prototype.$encryptParam = function (obj) {
+    var CryptoJS = require('crypto-js')
+
+    var plaintext = JSON.stringify(obj)
+    var iv = CryptoJS.lib.WordArray.random(16)
+    var key = CryptoJS.SHA256(process.env.SECRET)
+    var encrypted = CryptoJS.AES.encrypt(plaintext, key, {
+      iv: iv
+    })
+    var data = {
+      ciphertext: CryptoJS.enc.Base64.stringify(encrypted.ciphertext),
+      iv: CryptoJS.enc.Hex.stringify(iv)
+    }
+
+    return data
+  }
+
   Vue.prototype.$displayLoading = function (
     form
     , loadingMessage = ''
