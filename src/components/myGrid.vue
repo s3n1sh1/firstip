@@ -17,7 +17,7 @@
         />
       </div>
       <div slot="top-right" slot-scope="props" class="row" style="padding: 0">
-        <q-btn icon="add" dense color="primary" class="q-mr-xs" @click="$emit('addEvent')" />
+        <q-btn icon="add" dense color="primary" class="q-mr-xs" @click="$emit('addEvent', {mode: '1'})" />
       </div>
 
       <q-tr slot="body" slot-scope="props" :props="props" >
@@ -26,8 +26,8 @@
         </q-td>
         <q-td auto-width key="action">
           <div class="text-right">
-            <q-btn icon="edit" dense color="primary" class="q-mr-xs" />
-            <q-btn icon="delete" dense color="red" />
+            <q-btn icon="edit" dense color="primary" class="q-mr-xs" @click="$emit('addEvent', {mode: '2', row: props.row})" />
+            <q-btn icon="delete" dense color="red" @click="$emit('deleteEvent', props.row)" />
           </div>
         </q-td>
       </q-tr>

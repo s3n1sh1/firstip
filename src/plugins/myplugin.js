@@ -57,13 +57,27 @@ export default ({ app, router, Vue }) => {
         reason = 'Invalid credentials.'
         break
       default:
-        reason = ops.response.data.message
+        reason = ops.response.data
     }
 
     form.$q.notify({
       color: 'negative',
       icon: 'report_problem',
       message: reason,
+      position: 'bottom',
+      timeout: 3000
+    })
+  }
+
+  Vue.prototype.$traitSuccess = function (
+    form, ops
+  ) {
+    form.$q.loading.hide()
+
+    form.$q.notify({
+      color: 'positive',
+      icon: 'check_circle',
+      message: ops.data.message,
       position: 'bottom',
       timeout: 3000
     })
