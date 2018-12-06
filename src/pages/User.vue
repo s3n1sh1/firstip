@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <myGrid ref="user.grid"
-      :columnsty="columns" :routesty="'loadUser'"
+      :columnsty="columns" :routesty="'loadUser'" :buttonty="'aed'"
       @addEvent="openModal" @deleteEvent="onDelete"
     />
 
@@ -174,14 +174,13 @@ export default {
         }
       }
 
-      this.$displayLoading(this)
       axios.post('saveUser', {user: this.user, mode: this.mode}).then((response) => {
-        this.$q.loading.hide()
         this.$traitSuccess(this, response)
         this.opened = false
+        this.$refs['user.grid'].loading = true
         axios.get('loadUser').then((response) => {
           this.$refs['user.grid'].tableData = response.data.data
-          this.$nextTick(() => { this.$q.loading.hide() })
+          this.$refs['user.grid'].loading = false
         })
       }, (error) => { this.$traitError(this, error) })
     },

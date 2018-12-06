@@ -6,18 +6,28 @@
       :columns="columnsty"
       :row-key="tableKey"
       :table-style="tblheight"
+      :filter="filter"
+      :pagination.sync="paginationControl"
+      :loading="loading"
       separator="horizontal"
     >
-      <div slot="top-left" slot-scope="props" class="row bg-white q-ml-sm" style="padding: 0">
+      <div slot="top-left" slot-scope="props" class="row q-ml-sm" style="padding: 0">
         <q-search
           hide-underline
-          color="primary"
           v-model="filter"
-          class="q-ma-xs q-caption"
+          class="q-caption"
+          color="white"
+          inverted-light
         />
+        <slot />
       </div>
       <div slot="top-right" slot-scope="props" class="row" style="padding: 0">
-        <q-btn icon="add" dense color="primary" class="q-mr-xs" @click="$emit('addEvent', {mode: '1'})" />
+        <q-btn v-show="buttonty.includes('a')" icon="add" dense color="primary" class="q-mr-xs"
+          @click="$emit('addEvent', {mode: '1'})"
+        />
+        <q-btn v-show="buttonty.includes('c')" icon="check" dense color="primary" class="q-mr-xs"
+          @click="$emit('addEvent', {mode: '4'})"
+        />
       </div>
 
       <q-tr slot="body" slot-scope="props" :props="props" >
@@ -26,8 +36,12 @@
         </q-td>
         <q-td auto-width key="action">
           <div class="text-right">
-            <q-btn icon="edit" dense color="primary" class="q-mr-xs" @click="$emit('addEvent', {mode: '2', row: props.row})" />
-            <q-btn icon="delete" dense color="red" @click="$emit('deleteEvent', props.row)" />
+            <q-btn v-show="buttonty.includes('e')" icon="edit" dense color="primary" class="q-mr-xs"
+              @click="$emit('addEvent', {mode: '2', row: props.row})"
+            />
+            <q-btn v-show="buttonty.includes('d')" icon="delete" dense color="red"
+              @click="$emit('deleteEvent', props.row)"
+            />
           </div>
         </q-td>
       </q-tr>
@@ -56,25 +70,30 @@
 export default {
   props: {
     columnsty: { type: Array },
-    routesty: { type: String }
+    routesty: { type: String },
+    buttonty: { type: String }
   },
   data () {
     return {
       tblheight: '',
       tableKey: '',
       tableData: [],
-      filter: ''
+      filter: '',
+      paginationControl: { rowsPerPage: 10, page: 1 },
+      loading: false
     }
   },
   methods: {
     onResize (size) {
-      let value = this.$q.platform.is.mobile ? 137 : 142
+      let value = this.$q.platform.is.mobile ? 143 : 148
       this.tblheight = 'height: ' + (size.height - value).toString() + 'px'
     }
   },
   mounted: function () {
+    this.loading = true
     this.$axios.get(this.$axios.defaults.baseURL + this.routesty).then((response) => {
       this.tableData = response.data.data
+      this.loading = false
     })
   }
 }
