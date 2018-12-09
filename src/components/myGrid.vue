@@ -34,7 +34,7 @@
         <q-td auto-width v-for="col in props.cols" :key="col.name" :props="props">
           {{col.value}}
         </q-td>
-        <q-td auto-width key="action">
+        <q-td v-show="buttonty.includes('e') || buttonty.includes('d')" auto-width key="action">
           <div class="text-right">
             <q-btn v-show="buttonty.includes('e')" icon="edit" dense color="primary" class="q-mr-xs"
               @click="$emit('addEvent', {mode: '2', row: props.row})"
@@ -71,6 +71,7 @@ export default {
   props: {
     columnsty: { type: Array },
     routesty: { type: String },
+    paramsty: { type: Object },
     buttonty: { type: String }
   },
   data () {
@@ -91,7 +92,7 @@ export default {
   },
   mounted: function () {
     this.loading = true
-    this.$axios.get(this.$axios.defaults.baseURL + this.routesty).then((response) => {
+    this.$axios.get(this.$axios.defaults.baseURL + this.routesty, this.paramsty).then((response) => {
       this.tableData = response.data.data
       this.loading = false
     })

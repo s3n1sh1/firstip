@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <myGrid ref="iuran.grid"
-      :columnsty="columns" :routesty="'loadUser'" :buttonty="'c'"
+      :columnsty="columns" :routesty="'loadIuran'" :buttonty="'c'"
     >
       <q-datetime
         type="date"
@@ -11,6 +11,9 @@
         format="MMM YYYY"
         :max="today"
       />
+      <template slot="afteraction">
+        test
+      </template>
     </myGrid>
   </q-page>
 </template>
