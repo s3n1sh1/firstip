@@ -7,7 +7,7 @@ const routes = [
     children: [
       { name: 'Welcome Page', path: '', component: () => import('pages/Index.vue') },
       { name: 'Setting User', path: 'user', component: () => import('pages/User.vue') },
-      { name: 'Input Iuran', path: 'iuran', component: () => import('pages/Iuran.vue') },
+      { name: 'Settlement Iuran', path: 'iuran', component: () => import('pages/Iuran.vue') },
       { name: 'History Iuran', path: 'record', component: () => import('pages/Record.vue') }
     ]
   },

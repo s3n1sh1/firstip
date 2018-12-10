@@ -94,4 +94,12 @@ export default ({ app, router, Vue }) => {
         form.$store.commit('auth/LOGOUT_OK')
       })
   }
+
+  Vue.prototype.$monthToDate = function (
+    date
+  ) {
+    let month = date.substring(4)
+    let year = date.substring(0, 4)
+    return new Date(month + '-01-' + year)
+  }
 }

@@ -55,8 +55,8 @@
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/iuran')">
-          <q-item-side icon="library_books" />
-          <q-item-main label="Input Iuran" class="q-body-1" />
+          <q-item-side icon="assignment_turned_in" />
+          <q-item-main label="Settlement Iuran" class="q-body-1" />
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item @click.native="$router.push('/record')">

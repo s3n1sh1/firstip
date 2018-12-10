@@ -4,12 +4,14 @@
     <q-table
       :data="tableData"
       :columns="columnsty"
-      :row-key="tableKey"
+      :row-key="keysty"
       :table-style="tblheight"
       :filter="filter"
       :pagination.sync="paginationControl"
       :loading="loading"
       separator="horizontal"
+      :selection="selectionty"
+      :selected.sync="multiSelected"
     >
       <div slot="top-left" slot-scope="props" class="row q-ml-sm" style="padding: 0">
         <q-search
@@ -25,12 +27,28 @@
         <q-btn v-show="buttonty.includes('a')" icon="add" dense color="primary" class="q-mr-xs"
           @click="$emit('addEvent', {mode: '1'})"
         />
-        <q-btn v-show="buttonty.includes('c')" icon="check" dense color="primary" class="q-mr-xs"
-          @click="$emit('addEvent', {mode: '4'})"
+        <q-btn v-show="buttonty.includes('c')" icon="done_outline" dense color="primary" class="q-mr-xs"
+          @click="$emit('confirmEvent', multiSelected)"
         />
       </div>
 
+      <q-tr slot="header" slot-scope="props">
+        <q-th auto-width v-show="selectionty != 'none'">
+          <q-checkbox
+            v-if="props.multipleSelect"
+            v-model="props.selected"
+            indeterminate-value="some"
+          />
+        </q-th>
+        <q-th v-for="col in props.cols" :key="col.name" :props="props">
+          {{ col.label }}
+        </q-th>
+      </q-tr>
+
       <q-tr slot="body" slot-scope="props" :props="props" >
+        <q-td v-show="selectionty != 'none'">
+          <q-checkbox v-model="props.selected" />
+        </q-td>
         <q-td auto-width v-for="col in props.cols" :key="col.name" :props="props">
           {{col.value}}
         </q-td>
@@ -69,19 +87,21 @@
 <script>
 export default {
   props: {
+    keysty: { type: String },
     columnsty: { type: Array },
     routesty: { type: String },
     paramsty: { type: Object },
-    buttonty: { type: String }
+    buttonty: { default: '', type: String },
+    selectionty: { default: 'none', type: String }
   },
   data () {
     return {
       tblheight: '',
-      tableKey: '',
       tableData: [],
       filter: '',
       paginationControl: { rowsPerPage: 10, page: 1 },
-      loading: false
+      loading: false,
+      multiSelected: []
     }
   },
   methods: {
@@ -92,7 +112,7 @@ export default {
   },
   mounted: function () {
     this.loading = true
-    this.$axios.get(this.$axios.defaults.baseURL + this.routesty, this.paramsty).then((response) => {
+    this.$axios.get(this.$axios.defaults.baseURL + this.routesty, {params: this.paramsty}).then((response) => {
       this.tableData = response.data.data
       this.loading = false
     })

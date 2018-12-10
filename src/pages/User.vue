@@ -35,6 +35,16 @@
             float-label="Name"
             :error="$v.user.tuname.$error"
           />
+          <q-datetime
+            ref="user.tumont"
+            class="q-caption q-mt-sm"
+            inverted
+            format="MMM YYYY"
+            v-model="user.tumont"
+            float-label="Periode Masuk"
+            :readonly="readonly"
+            :error="$v.user.tumont.$error"
+          />
           <q-input
             ref="user.tupass"
             v-model="user.tupass"
@@ -65,6 +75,7 @@
             min="0"
             v-model="user.tuiran"
             float-label="Iuran"
+            :error="$v.user.tuiran.$error"
           />
           <div class="q-mt-sm text-right">
             <q-btn color="primary" label="save" @click="onSave" />
@@ -108,6 +119,7 @@ export default {
         tuname: '',
         tupass: '',
         tupass_confirmation: '',
+        tumont: '',
         tuiran: 0
       },
       readonly: false,
@@ -119,7 +131,9 @@ export default {
       tuuser: { required },
       tuname: { required },
       tupass: { required, minLength: minLength(8) },
-      tupass_confirmation: { required, sameAsPassword: sameAs('tupass') }
+      tupass_confirmation: { required, sameAsPassword: sameAs('tupass') },
+      tumont: { required },
+      tuiran: { required }
     }
   },
   methods: {
@@ -134,7 +148,13 @@ export default {
       } else {
         this.readonly = true
         for (let child in this.user) {
-          this.user[child] = child === 'tupass' || child === 'tupass_confirmation' ? 'xxxxxxxx' : data.row[child]
+          if (child === 'tupass' || child === 'tupass_confirmation') {
+            this.user[child] = 'xxxxxxxx'
+          } else if (child === 'tumont') {
+            this.user[child] = this.$monthToDate(data.row[child])
+          } else {
+            this.user[child] = data.row[child]
+          }
           this.$v.user.$reset()
         }
       }
@@ -169,6 +189,11 @@ export default {
           } else if (!this.$v.user.tupass_confirmation.sameAsPassword) {
             this.$q.notify('Password must be Identical.')
             this.$refs['user.tupass_confirmation'].focus()
+          } else if (!this.$v.user.tumont.required) {
+            this.$q.notify('Periode Masuk is required.')
+          } else if (!this.$v.user.tuiran.required) {
+            this.$q.notify('Iuran is required.')
+            this.$refs['user.tuiran'].focus()
           }
           return
         }
@@ -189,7 +214,7 @@ export default {
       this.user.tuuserid = row.tuuserid
       this.$q.dialog({
         title: 'Delete',
-        message: 'Are you sure you want to delete this data?',
+        message: 'Are you sure you want to delete these data?',
         ok: 'Agree',
         cancel: 'Disagree'
       }).then(() => {
