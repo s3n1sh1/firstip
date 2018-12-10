@@ -1,13 +1,21 @@
 <template>
   <q-page class="flex flex-center">
-
-    <blockquote>
-      <p>Welcome to Record page.</p>
-      <small>Please use the burger on top left corner to show the Menu.</small>
-    </blockquote>
-
-    <q-btn label="test" @click="onTest" />
-
+    <myGrid ref="record.grid" keysty="tiuserid"
+      :columnsty="columns" :routesty="'loadIuran'"
+      :paramsty="{date: date}"
+    >
+      <q-datetime
+        ref="record.date"
+        v-model="date"
+        class="q-caption q-ml-sm"
+        inverted
+        popover
+        default-view="year"
+        format="YYYY"
+        :max="today"
+        @input="onDateChange"
+      />
+    </myGrid>
   </q-page>
 </template>
 
@@ -15,15 +23,35 @@
 </style>
 
 <script>
+
+import myGrid from '../components/myGrid'
+
+const today = new Date()
+
 export default {
   name: 'PageRecord',
+  components: { myGrid },
+  data () {
+    return {
+      columns: [
+        {
+          name: 'tuuser',
+          required: true,
+          label: 'Username',
+          align: 'left',
+          field: 'tuuser',
+          sortable: true
+        },
+        { name: 'tuname', label: 'Name', field: 'tuname', align: 'left', sortable: true },
+        { name: 'tiiran', label: 'Iuran', field: 'tiiran', align: 'right' }
+      ],
+      date: today,
+      today
+    }
+  },
   methods: {
-    onTest () {
-      this.$auth.fetch({})
-        .then(response => {
-          console.log('hi!')
-          this.$auth.refresh()
-        }, (error) => { console.log('bye!'); console.log(error) })
+    onDateChange () {
+      this.$refs['record.date'].hide()
     }
   },
   mounted: function () {

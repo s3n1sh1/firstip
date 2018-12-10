@@ -6,9 +6,12 @@
       :paramsty="{date: date}" @confirmEvent="onConfirm"
     >
       <q-datetime
+        ref="iuran.date"
         v-model="date"
         class="q-caption q-ml-sm"
         inverted
+        popover
+        default-view="month"
         format="MMM YYYY"
         :max="today"
         @input="onDateChange"
@@ -50,10 +53,12 @@ export default {
   },
   methods: {
     onDateChange () {
+      this.$refs['iuran.date'].hide()
       this.$refs['iuran.grid'].loading = true
       axios.get('loadIuran', {params: {date: this.date}}).then((response) => {
         this.$refs['iuran.grid'].tableData = response.data.data
         this.$refs['iuran.grid'].loading = false
+        this.$refs['iuran.grid'].$children[1].$children[0].focus()
       })
     },
     onConfirm (selection) {
