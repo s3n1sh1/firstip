@@ -99,7 +99,7 @@ export default {
       tblheight: '',
       tableData: [],
       filter: '',
-      paginationControl: { rowsPerPage: 10, page: 1 },
+      paginationControl: { rowsPerPage: 15, page: 1 },
       loading: false,
       multiSelected: []
     }

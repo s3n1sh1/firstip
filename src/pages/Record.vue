@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <myGrid ref="record.grid" keysty="tiuserid"
-      :columnsty="columns" :routesty="'loadIuran'"
+    <myGrid ref="record.grid" keysty="mnth"
+      :columnsty="columns" :routesty="'loadRecord'"
       :paramsty="{date: date}"
     >
       <q-datetime
@@ -35,15 +35,13 @@ export default {
     return {
       columns: [
         {
-          name: 'tuuser',
+          name: 'mnth',
           required: true,
-          label: 'Username',
+          label: 'Month',
           align: 'left',
-          field: 'tuuser',
+          field: 'mnth',
           sortable: true
-        },
-        { name: 'tuname', label: 'Name', field: 'tuname', align: 'left', sortable: true },
-        { name: 'tiiran', label: 'Iuran', field: 'tiiran', align: 'right' }
+        }
       ],
       date: today,
       today
