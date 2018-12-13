@@ -62,6 +62,11 @@
             />
           </div>
         </q-td>
+        <q-td v-show="statusty.field" auto-width key="status" :class="getColor(props.row[statusty.field])">
+          <div class="text-weight-bold text-center text-white q-caption">
+            {{props.row[statusty.field] === null ? statusty.messageno : statusty.messageyes}}
+          </div>
+        </q-td>
       </q-tr>
     </q-table>
   </div>
@@ -92,7 +97,14 @@ export default {
     routesty: { type: String },
     paramsty: { type: Object },
     buttonty: { default: '', type: String },
-    selectionty: { default: 'none', type: String }
+    selectionty: { default: 'none', type: String },
+    statusty: {
+      type: Object,
+      default: () => ({
+        field: '',
+        message: ''
+      })
+    }
   },
   data () {
     return {
@@ -108,6 +120,10 @@ export default {
     onResize (size) {
       let value = this.$q.platform.is.mobile ? 143 : 148
       this.tblheight = 'height: ' + (size.height - value).toString() + 'px'
+    },
+    getColor (field) {
+      let color = field === null ? 'red' : 'positive'
+      return `bg-${color}`
     }
   },
   mounted: function () {
