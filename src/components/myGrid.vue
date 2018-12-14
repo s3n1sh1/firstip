@@ -21,15 +21,16 @@
           color="white"
           inverted-light
         />
-        <slot />
+        <slot name="toolleft" />
       </div>
       <div slot="top-right" slot-scope="props" class="row" style="padding: 0">
-        <q-btn v-show="buttonty.includes('a')" icon="add" dense color="primary" class="q-mr-xs"
+        <q-btn v-show="buttonty.includes('a')" icon="add" dense color="primary" class="q-mr-sm"
           @click="$emit('addEvent', {mode: '1'})"
         />
-        <q-btn v-show="buttonty.includes('c')" icon="done_outline" dense color="primary" class="q-mr-xs"
+        <q-btn v-show="buttonty.includes('c')" icon="done_outline" dense color="primary" class="q-mr-sm"
           @click="$emit('confirmEvent', multiSelected)"
         />
+        <slot name="toolright" class="q-mr-sm" />
       </div>
 
       <q-tr slot="header" slot-scope="props">

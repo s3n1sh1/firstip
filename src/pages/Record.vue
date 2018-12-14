@@ -1,20 +1,22 @@
 <template>
   <q-page class="flex flex-center">
-    <myGrid ref="record.grid" keysty="bln"
+    <myGrid ref="record.grid" keysty="bln" buttonty="o"
       :columnsty="columns" :routesty="'loadRecord'"
       :paramsty="{date: date}" :statusty="{field: 'tiiranid', messageno: 'BELUM LUNAS', messageyes: 'SUDAH LUNAS'}"
     >
-      <q-datetime
-        ref="record.date"
-        v-model="date"
-        class="q-caption q-ml-sm"
-        inverted
-        popover
-        default-view="year"
-        format="YYYY"
-        :max="today"
-        @input="onDateChange"
-      />
+      <template slot="toolleft">
+        <q-datetime
+          ref="record.date"
+          v-model="date"
+          class="q-caption q-ml-sm"
+          inverted
+          popover
+          default-view="year"
+          format="YYYY"
+          :max="today"
+          @input="onDateChange"
+        />
+      </template>
     </myGrid>
   </q-page>
 </template>

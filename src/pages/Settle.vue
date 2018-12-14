@@ -1,13 +1,13 @@
 <template>
   <q-page class="flex flex-center">
-    <myGrid ref="iuran.grid" keysty="tiuserid"
-      :columnsty="columns" :routesty="'loadIuran'"
-      :buttonty="'c'" selectionty="multiple"
-      :paramsty="{date: date}" @confirmEvent="onConfirm"
+    <myGrid ref="settle.grid" keysty="tiiranid"
+      :columnsty="columns" :routesty="'loadSettle'"
+      :buttonty="'d'"
+      :paramsty="{date: date}" @deleteEvent="onDelete"
     >
       <template slot="toolleft">
         <q-datetime
-          ref="iuran.date"
+          ref="settle.date"
           v-model="date"
           class="q-caption q-ml-sm"
           inverted
@@ -33,7 +33,7 @@ import myGrid from '../components/myGrid'
 const today = new Date()
 
 export default {
-  name: 'PageIuran',
+  name: 'PageSettle',
   components: { myGrid },
   data () {
     return {
@@ -55,33 +55,28 @@ export default {
   },
   methods: {
     onDateChange () {
-      this.$refs['iuran.date'].hide()
-      this.$refs['iuran.grid'].loading = true
-      axios.get('loadIuran', {params: {date: this.date}}).then((response) => {
-        this.$refs['iuran.grid'].tableData = response.data.data
-        this.$refs['iuran.grid'].loading = false
-        this.$refs['iuran.grid'].$children[1].$children[0].focus()
+      this.$refs['settle.date'].hide()
+      this.$refs['settle.grid'].loading = true
+      axios.get('loadSettle', {params: {date: this.date}}).then((response) => {
+        this.$refs['settle.grid'].tableData = response.data.data
+        this.$refs['settle.grid'].loading = false
+        this.$refs['settle.grid'].$children[1].$children[0].focus()
       })
     },
-    onConfirm (selection) {
-      if (selection.length === 0) {
-        this.$q.notify('No rows selected.')
-        return
-      }
-
+    onDelete (row) {
       this.$q.dialog({
-        title: 'Confirm',
-        message: 'Are you sure you want to confirm these data?',
+        title: 'Delete',
+        message: 'Are you sure you want to remove these data?',
         ok: 'Agree',
         cancel: 'Disagree'
       }).then(() => {
         this.$displayLoading(this)
-        axios.post('saveIuran', {iuran: selection, mode: '1', month: this.date}).then((response) => {
+        axios.post('saveIuran', {iuran: row.tiiranid, mode: '3', month: this.date}).then((response) => {
           this.$traitSuccess(this, response)
-          this.$refs['iuran.grid'].loading = true
-          axios.get('loadIuran', {params: {date: this.date}}).then((response) => {
-            this.$refs['iuran.grid'].tableData = response.data.data
-            this.$refs['iuran.grid'].loading = false
+          this.$refs['settle.grid'].loading = true
+          axios.get('loadSettle', {params: {date: this.date}}).then((response) => {
+            this.$refs['settle.grid'].tableData = response.data.data
+            this.$refs['settle.grid'].loading = false
           })
         }, (error) => { this.$traitError(this, error) })
       }).catch(() => {})

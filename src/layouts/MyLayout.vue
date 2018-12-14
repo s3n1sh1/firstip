@@ -59,6 +59,11 @@
           <q-item-main label="Settlement Iuran" class="q-body-1" />
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
+        <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/settle')">
+          <q-item-side icon="assignment_return" />
+          <q-item-main label="Remove Settlement" class="q-body-1" />
+          <q-item-side icon="chevron_right" style="min-width: 0" />
+        </q-item>
         <q-item @click.native="$router.push('/record')">
           <q-item-side icon="event_note" />
           <q-item-main label="History Iuran" class="q-body-1" />
