@@ -57,7 +57,7 @@ export default ({ app, router, Vue }) => {
         reason = 'Invalid credentials.'
         break
       default:
-        reason = ops.response.data
+        reason = ops.response.data.error
     }
 
     form.$q.notify({

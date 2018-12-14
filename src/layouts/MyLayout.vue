@@ -20,7 +20,15 @@
         </q-toolbar-title>
 
         <q-btn-dropdown flat dense no-caps :label="USER_DETAIL.username">
-          <q-list link no-border class="no-padding" >
+          <q-list link no-border class="no-padding">
+            <q-item dense v-close-overlay class="q-pa-xs" @click.native="passwordModal = true">
+              <q-item-side left class="text-center" icon="settings" color="primary" />
+              <q-item-main>
+                <q-item-tile class="q-caption text-weight-bold text-primary text-no-wrap q-mr-md">CHANGE PASSWORD</q-item-tile>
+              </q-item-main>
+              <!-- <q-item-side right color="primary" icon="keyboard_arrow_right" /> -->
+            </q-item>
+            <q-item-separator class="no-margin" />
             <q-item dense v-close-overlay class="q-pa-xs" @click.native="logout()">
               <q-item-side left class="text-center" icon="power_off" color="red" />
               <q-item-main>
@@ -72,6 +80,51 @@
       </q-list>
     </q-layout-drawer>
 
+    <q-modal
+      v-model="passwordModal"
+      minimized no-esc-dismiss no-backdrop-dismiss
+      @show="$refs['layout.oldpass'].focus()"
+    >
+      <q-modal-layout>
+        <q-toolbar slot="header">
+          <q-btn
+            flat
+            round
+            dense
+            @click="passwordModal = false"
+            icon="reply"
+            wait-for-ripple
+          />
+          <q-toolbar-title class="text-italic text-weight-bold">
+            <div>Change Password</div>
+          </q-toolbar-title>
+        </q-toolbar>
+        <div class="q-pa-md meinput">
+          <q-input
+            ref="layout.oldpass"
+            v-model="layout.oldpass"
+            float-label="Old Password"
+            type="password"
+            no-pass-toggle
+            lower-case
+            :error="$v.layout.oldpass.$error"
+          />
+          <q-input
+            ref="layout.newpass"
+            v-model="layout.newpass"
+            float-label="New Password"
+            type="password"
+            no-pass-toggle
+            lower-case
+            :error="$v.layout.newpass.$error"
+          />
+          <div class="q-mt-sm text-right">
+            <q-btn color="primary" label="change" @click="onChangePass" />
+          </div>
+        </div>
+      </q-modal-layout>
+    </q-modal>
+
     <q-page-container v-if="$auth.ready()">
       <router-view />
     </q-page-container>
@@ -79,6 +132,9 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+import { required, minLength } from 'vuelidate/lib/validators'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -86,7 +142,18 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      positionModal: true
+      positionModal: true,
+      passwordModal: false,
+      layout: {
+        oldpass: '',
+        newpass: ''
+      }
+    }
+  },
+  validations: {
+    layout: {
+      oldpass: { required },
+      newpass: { required, minLength: minLength(8) }
     }
   },
   methods: {
@@ -104,6 +171,27 @@ export default {
           console.log('error')
         }
       })
+    },
+    onChangePass () {
+      this.$v.layout.$touch()
+      if (this.$v.layout.$error) {
+        if (!this.$v.layout.oldpass.required) {
+          this.$q.notify('Old Password is required.')
+          this.$refs['layout.oldpass'].focus()
+        } else if (!this.$v.layout.newpass.required) {
+          this.$q.notify('New Password is required.')
+          this.$refs['layout.newpass'].focus()
+        } else if (!this.$v.layout.newpass.minLength) {
+          this.$q.notify('Password must have at least 8 characters.')
+          this.$refs['layout.newpass'].focus()
+        }
+        return
+      }
+
+      axios.post('changePass', {password: this.layout}).then((response) => {
+        this.$traitSuccess(this, response)
+        this.passwordModal = false
+      }, (error) => { console.log(error); this.$traitError(this, error) })
     }
   },
   computed: {
