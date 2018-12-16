@@ -57,17 +57,26 @@
           <q-item-main label="Home" class="q-body-1" />
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
-        <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/user')">
+        <q-item
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          @click.native="$router.push('/user')"
+        >
           <q-item-side icon="account_box" />
           <q-item-main label="User Settings" class="q-body-1" />
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
-        <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/iuran')">
+        <q-item
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          @click.native="$router.push('/iuran')"
+        >
           <q-item-side icon="assignment_turned_in" />
           <q-item-main label="Settlement Iuran" class="q-body-1" />
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
-        <q-item v-show="USER_DETAIL.username === 'admin'" @click.native="$router.push('/settle')">
+        <q-item
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          @click.native="$router.push('/settle')"
+        >
           <q-item-side icon="assignment_return" />
           <q-item-main label="Remove Settlement" class="q-body-1" />
           <q-item-side icon="chevron_right" style="min-width: 0" />
