@@ -78,6 +78,7 @@
             :error="$v.user.tuiran.$error"
           />
           <div class="q-mt-sm text-right">
+            <q-btn color="amber" label="reset pass" class="q-mr-xs" @click="onReset" />
             <q-btn color="primary" label="save" @click="onSave" />
           </div>
         </div>
@@ -220,6 +221,19 @@ export default {
       }).then(() => {
         this.$displayLoading(this)
         this.onSave()
+      }).catch(() => {})
+    },
+    onReset () {
+      this.$q.dialog({
+        title: 'Reset',
+        message: 'Are you sure you want to reset this user password?',
+        ok: 'Agree',
+        cancel: 'Disagree'
+      }).then(() => {
+        this.$displayLoading(this)
+        axios.post('resetPass', {user: this.user}).then((response) => {
+          this.$traitSuccess(this, response)
+        }, (error) => { this.$traitError(this, error) })
       }).catch(() => {})
     }
   },

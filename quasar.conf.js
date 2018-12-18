@@ -29,8 +29,8 @@ module.exports = function (ctx) {
       // extractCSS: false,
       env: ctx.dev
         ? { // so on dev we'll have
-          // API: JSON.stringify('http://localhost:8033/api/'),
-          API: JSON.stringify('http://localhost:8099/firstdb/api/'),
+          API: JSON.stringify('http://localhost:8033/api/'),
+          // API: JSON.stringify('http://localhost:8099/firstdb/api/'),
           SECRET: JSON.stringify('eds123')
         }
         : { // and on build (production)
