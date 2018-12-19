@@ -20,7 +20,7 @@
             <div>{{this.mode === '1' ? 'Add' : 'Update'}} User</div>
           </q-toolbar-title>
         </q-toolbar>
-        <div class="q-pa-md meinput">
+        <div class="q-pa-sm meinput">
           <q-input
             ref="user.tuuser"
             v-model="user.tuuser"
@@ -71,14 +71,13 @@
             align="right"
             :decimals="2"
             prefix="Rp."
-            numeric-keyboard-toggle
             min="0"
             v-model="user.tuiran"
             float-label="Iuran"
             :error="$v.user.tuiran.$error"
           />
           <div class="q-mt-sm text-right">
-            <q-btn color="amber" label="reset pass" class="q-mr-xs" @click="onReset" />
+            <q-btn v-show="mode == '2'" color="amber" label="reset pass" class="q-mr-xs" @click="onReset" />
             <q-btn color="primary" label="save" @click="onSave" />
           </div>
         </div>

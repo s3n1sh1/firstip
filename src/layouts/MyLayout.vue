@@ -108,7 +108,7 @@
             <div>Change Password</div>
           </q-toolbar-title>
         </q-toolbar>
-        <div class="q-pa-md meinput">
+        <div class="q-pa-sm meinput">
           <q-input
             ref="layout.oldpass"
             v-model="layout.oldpass"

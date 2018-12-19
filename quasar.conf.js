@@ -30,6 +30,7 @@ module.exports = function (ctx) {
       env: ctx.dev
         ? { // so on dev we'll have
           API: JSON.stringify('http://localhost:8033/api/'),
+          // API: JSON.stringify('http://192.168.42.175:8033/api/'),
           // API: JSON.stringify('http://localhost:8099/firstdb/api/'),
           SECRET: JSON.stringify('eds123')
         }
@@ -47,7 +48,7 @@ module.exports = function (ctx) {
     },
     devServer: {
       // https: true,
-      // port: 8080,
+      port: 8081,
       open: true // opens browser window automatically
     },
     framework: 'all',
@@ -66,15 +67,70 @@ module.exports = function (ctx) {
     //     'QListHeader',
     //     'QItem',
     //     'QItemMain',
-    //     'QItemSide'
+    //     'QItemSide',
+    //     'QBtnDropdown',
+    //     'QItemTile',
+    //     'QItemSeparator',
+    //     'QModal',
+    //     'QModalLayout',
+    //     'QField',
+    //     'QInput',
+    //     'QWindowResizeObservable',
+    //     'QTable',
+    //     'QTh',
+    //     'QTr',
+    //     'QTd',
+    //     'QTableColumns',
+    //     'QSearch',
+    //     'QDatetime',
+    //     'QCheckbox',
+    //     'QCard',
+    //     'QCardTitle',
+    //     'QCardMain',
+    //     'QCardMedia',
+    //     'QCardSeparator',
+    //     'QCardActions',
+    //     'QSpinner',
+    //     'QSpinnerAudio',
+    //     'QSpinnerBall',
+    //     'QSpinnerBars',
+    //     'QSpinnerCircles',
+    //     'QSpinnerComment',
+    //     'QSpinnerCube',
+    //     'QSpinnerDots',
+    //     'QSpinnerFacebook',
+    //     'QSpinnerGears',
+    //     'QSpinnerGrid',
+    //     'QSpinnerHearts',
+    //     'QSpinnerHourglass',
+    //     'QSpinnerInfinity',
+    //     'QSpinnerIos',
+    //     'QSpinnerMat',
+    //     'QSpinnerOval',
+    //     'QSpinnerPie',
+    //     'QSpinnerPuff',
+    //     'QSpinnerRadio',
+    //     'QSpinnerRings',
+    //     'QSpinnerTail',
+    //     'QProgress',
+    //     'QAjaxBar'
     //   ],
     //   directives: [
-    //     'Ripple'
+    //     'Ripple',
+    //     'CloseOverlay'
     //   ],
     //   // Quasar plugins
     //   plugins: [
-    //     'Notify'
-    //   ]
+    //     'Notify',
+    //     'Loading',
+    //     'LoadingBar',
+    //     'Dialog'
+    //   ],
+    //   config: {
+    //     cordova: {
+    //       src: 'index.html'
+    //     }
+    //   }
     //   // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
     //   // i18n: 'de' // Quasar language
     // },
