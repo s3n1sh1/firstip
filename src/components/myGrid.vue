@@ -15,6 +15,7 @@
     >
       <div slot="top-left" slot-scope="props" class="row q-ml-sm" style="padding: 0">
         <q-search
+          v-show="showsearch"
           hide-underline
           v-model="filter"
           class="q-caption"
@@ -105,7 +106,8 @@ export default {
         field: '',
         message: ''
       })
-    }
+    },
+    showsearch: { default: true, type: Boolean }
   },
   data () {
     return {

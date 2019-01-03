@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <myGrid ref="record.grid" keysty="bln" buttonty="o"
+    <myGrid ref="record.grid" keysty="bln" buttonty="o" :showsearch="false"
       :columnsty="columns" :routesty="'loadRecord'"
       :paramsty="{date: date}" :statusty="{field: 'tiiranid', messageno: 'BELUM LUNAS', messageyes: 'SUDAH LUNAS'}"
     >
@@ -8,7 +8,7 @@
         <q-datetime
           ref="record.date"
           v-model="date"
-          class="q-caption q-ml-sm"
+          class="q-caption"
           inverted
           popover
           default-view="year"
@@ -47,11 +47,11 @@ export default {
   methods: {
     onDateChange () {
       this.$refs['record.date'].hide()
+      this.$refs['record.date'].focused = false
       this.$refs['record.grid'].loading = true
       axios.get('loadRecord', {params: {date: this.date}}).then((response) => {
         this.$refs['record.grid'].tableData = response.data.data
         this.$refs['record.grid'].loading = false
-        this.$refs['record.grid'].$children[1].$children[0].focus()
       })
     }
   },

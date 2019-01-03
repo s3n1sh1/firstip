@@ -56,11 +56,11 @@ export default {
   methods: {
     onDateChange () {
       this.$refs['settle.date'].hide()
+      this.$refs['settle.date'].focused = false
       this.$refs['settle.grid'].loading = true
       axios.get('loadSettle', {params: {date: this.date}}).then((response) => {
         this.$refs['settle.grid'].tableData = response.data.data
         this.$refs['settle.grid'].loading = false
-        this.$refs['settle.grid'].$children[1].$children[0].focus()
       })
     },
     onDelete (row) {

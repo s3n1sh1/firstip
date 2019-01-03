@@ -39,6 +39,7 @@
             ref="user.tumont"
             class="q-caption q-mt-sm"
             inverted
+            popover
             format="MMM YYYY"
             v-model="user.tumont"
             float-label="Periode Masuk"
