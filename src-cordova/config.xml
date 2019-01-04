@@ -22,4 +22,5 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <engine name="android" spec="^7.1.4" />
+    <icon density="mdpi" height="72" platform="android" src="res/android/icon.png" width="72" />
 </widget>
