@@ -1,7 +1,7 @@
 export default {
   App: {
     Author: 'Edison Tjong',
-    Name: 'MY IURAN',
+    Name: 'IURAN BPI',
     Version: '0.05'
   },
   User: {},

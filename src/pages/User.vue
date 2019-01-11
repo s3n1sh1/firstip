@@ -144,7 +144,6 @@ export default {
         this.readonly = false
         for (let child in this.user) {
           this.user[child] = child === 'tuiran' ? 0 : ''
-          this.$v.user.$reset()
         }
       } else {
         this.readonly = true
@@ -156,9 +155,9 @@ export default {
           } else {
             this.user[child] = data.row[child]
           }
-          this.$v.user.$reset()
         }
       }
+      this.$v.user.$reset()
       this.opened = true
     },
     modalOpened () {

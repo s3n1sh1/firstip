@@ -14,9 +14,9 @@
           popover
           default-view="month"
           format="MMM YYYY"
-          :max="today"
           @input="onDateChange"
         />
+        <!-- :max="today" -->
       </template>
     </myGrid>
   </q-page>

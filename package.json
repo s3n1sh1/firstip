@@ -2,7 +2,7 @@
   "name": "firstip",
   "version": "1.0.0",
   "description": "A Contribution Application",
-  "productName": "My Iuran",
+  "productName": "Iuran BPI",
   "cordovaId": "org.cordova.myiuran",
   "author": "Edison Tjong",
   "private": true,
