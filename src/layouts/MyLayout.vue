@@ -58,7 +58,7 @@
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item
-          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin' || USER_DETAIL.username === 'admin2'"
           @click.native="$router.push('/user')"
         >
           <q-item-side icon="account_box" />
@@ -66,7 +66,7 @@
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item
-          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin' || USER_DETAIL.username === 'admin2'"
           @click.native="$router.push('/news')"
         >
           <q-item-side icon="ballot" />
@@ -74,7 +74,7 @@
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item
-          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin' || USER_DETAIL.username === 'admin2'"
           @click.native="$router.push('/iuran')"
         >
           <q-item-side icon="assignment_turned_in" />
@@ -82,7 +82,7 @@
           <q-item-side icon="chevron_right" style="min-width: 0" />
         </q-item>
         <q-item
-          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin'"
+          v-show="USER_DETAIL.username === 'sa' || USER_DETAIL.username === 'admin' || USER_DETAIL.username === 'admin2'"
           @click.native="$router.push('/settle')"
         >
           <q-item-side icon="assignment_return" />

@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <myGrid ref="settle.grid" keysty="tiiranid"
       :columnsty="columns" :routesty="'loadSettle'"
-      :buttonty="'d'"
+      :buttonty="USER_DETAIL.username !== 'admin2' ? 'd' : ''"
       :paramsty="{date: date}" @deleteEvent="onDelete"
     >
       <template slot="toolleft">
@@ -15,8 +15,8 @@
           default-view="month"
           format="MMM YYYY"
           @input="onDateChange"
+          :max="maxdate"
         />
-        <!-- :max="today" -->
       </template>
     </myGrid>
   </q-page>
@@ -29,8 +29,11 @@
 
 import axios from 'axios'
 import myGrid from '../components/myGrid'
+import { mapGetters } from 'vuex'
+import { date } from 'quasar'
 
 const today = new Date()
+const maxdate = date.adjustDate(date.addToDate(today, { year: 2 }), { month: 12 })
 
 export default {
   name: 'PageSettle',
@@ -50,7 +53,8 @@ export default {
         { name: 'tiiran', label: 'Iuran', field: 'tiiran', align: 'right' }
       ],
       date: today,
-      today
+      today,
+      maxdate
     }
   },
   methods: {
@@ -81,6 +85,11 @@ export default {
         }, (error) => { this.$traitError(this, error) })
       }).catch(() => {})
     }
+  },
+  computed: {
+    ...mapGetters('auth', [
+      'USER_DETAIL'
+    ])
   },
   mounted: function () {
     this.$checkAuth(this)

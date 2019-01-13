@@ -13,7 +13,7 @@
           popover
           default-view="year"
           format="YYYY"
-          :max="today"
+          :max="maxdate"
           @input="onDateChange"
         />
       </template>
@@ -28,8 +28,10 @@
 
 import axios from 'axios'
 import myGrid from '../components/myGrid'
+import { date } from 'quasar'
 
 const today = new Date()
+const maxdate = date.addToDate(today, { year: 2 })
 
 export default {
   name: 'PageRecord',
@@ -41,7 +43,8 @@ export default {
         { name: 'iuran', label: 'Iuran', field: 'iuran', align: 'right' }
       ],
       date: today,
-      today
+      today,
+      maxdate
     }
   },
   methods: {
