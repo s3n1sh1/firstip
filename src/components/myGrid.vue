@@ -51,7 +51,7 @@
         <q-td v-show="selectionty != 'none'">
           <q-checkbox v-model="props.selected" />
         </q-td>
-        <q-td auto-width v-for="col in props.cols" :key="col.name" :props="props">
+        <q-td class="column-wrap" auto-width v-for="col in props.cols" :key="col.name" :props="props">
           {{col.value}}
         </q-td>
         <q-td v-show="buttonty.includes('e') || buttonty.includes('d')" auto-width key="action">
@@ -88,6 +88,10 @@
 .q-table th {
   font-weight: bolder;
   font-style: italic;
+}
+.column-wrap {
+  /* don't shorten cell contents */
+  white-space: normal !important;
 }
 </style>
 
