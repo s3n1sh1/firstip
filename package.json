@@ -1,9 +1,9 @@
 {
   "name": "firstip",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A Contribution Application",
   "productName": "Iuran BPI",
-  "cordovaId": "org.cordova.myiuran",
+  "cordovaId": "org.cordova.iuranbpi",
   "author": "Edison Tjong",
   "private": true,
   "scripts": {
